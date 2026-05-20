@@ -1,132 +1,93 @@
-# 🤖 Baymax — AI Career Copilot
+# 🚀 Baymax.app
 
-<div align="center">
+> AI-powered multi-agent career copilot for students and early professionals.
 
-**A multi-agent AI system that takes you from raw resume to job offer — all in one pipeline.**
+Baymax.app combines classical AI systems, modern LLM orchestration, persistent memory, and real-time career tooling into a single intelligent platform that helps users improve resumes, prepare for interviews, discover jobs, and build personalized learning roadmaps.
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-baymax--app--six.vercel.app-red?style=for-the-badge)](https://baymax-app-six.vercel.app)
-[![Backend](https://img.shields.io/badge/Backend-DigitalOcean-blue?style=for-the-badge)](https://baymax-app-ozhwo.ondigitalocean.app/health)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-
-</div>
+Built for the **Women in AI Accelerator Build Challenge** and designed to solve accessibility gaps in career mentorship and placement support.
 
 ---
 
-## 🎯 The Problem
+## ✨ Overview
 
-**Every year, millions of job seekers in Pakistan and globally fail to land interviews — not because they lack skills, but because they lack access to quality career infrastructure.**
+Most career platforms solve isolated problems.
 
-Specifically:
-- **Resume quality gap** — Most freshers and mid-level candidates submit ATS-incompatible resumes with no keywords aligned to the job description
-- **Interview unpreparedness** — Mock interview services are expensive; free YouTube content is generic and non-personalized  
-- **Information asymmetry** — Candidates don't know which companies are hiring, what skills are in demand, or what certifications are worth their time
-- **No personalized roadmap** — Career advice online is either too generic or behind a paywall
+One tool improves resumes.  
+Another gives interview questions.  
+Another lists jobs.  
+Another recommends courses.
 
-> **Baymax exists to be the AI career co-pilot that everyone deserves — not just those who can afford a career coach.**
+Baymax.app unifies all of them into a collaborative multi-agent ecosystem where specialized AI agents work together through shared memory and orchestration.
 
----
+The system blends:
 
-## 🧠 Why Multi-Agent?
-
-A single LLM cannot reliably solve this problem. Here's why:
-
-| Single-Model Limitation | How Baymax Solves It with Multi-Agent Design |
-|------------------------|---------------------------------------------|
-| Can't specialize deeply across domains | Each agent is purpose-built with its own system prompt, tools, and memory context |
-| Can't use external APIs mid-generation | Agents call Firecrawl, Serper, Groq Whisper as specialized tools |
-| No persistent memory across sessions | Memory Agent (Mem0) stores user context across all pipeline stages |
-| Analysis + Generation = conflicting objectives | ATS Analyzer and Roadmap Planner have separate objectives and prompts |
-| Voice transcription requires a separate model | Interview Agent invokes Whisper (a separate model) for STT |
-
-**The pipeline is sequential and stateful** — each agent's output enriches the context of the next. The Career Roadmap agent, for example, consumes outputs from all three upstream agents (resume analysis scores, interview weak areas, job search results) to generate a truly personalized 90-day plan.
+- **Classical AI** for constraint reasoning and planning
+- **LLMs** for personalization and natural interaction
+- **Persistent memory** for long-term user context
+- **Multi-agent specialization** for higher-quality outputs
+- **Real-time APIs** for live career intelligence
 
 ---
 
-## 🕹️ Agent Breakdown
+## 🧠 Core Features
 
-```
-USER
- │
- ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  STAGE 1 — CASS (Resume Builder Agent)                          │
-│  • Accepts raw text input or PDF upload                         │
-│  • AI-enhances individual resume sections (bullets, summary)    │
-│  • Generates ATS-friendly resume preview (PDF-ready)            │
-│  • Output → resume_text handed to Stage 2                       │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ resume_text
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  STAGE 2 — HONEY (ATS Analyzer Agent)                        │
-│  • Extracts text from PDF using PyMuPDF                         │
-│  • Calls Groq LLaMA 3.3-70b to score: ATS, Match, Overall      │
-│  • Returns: strengths, weaknesses, missing keywords,            │
-│    section feedback, and 5 improved bullet rewrites             │
-│  • Persists analysis to Mem0 memory                             │
-│  • Output → analysis_result + skills_gap handed to Stage 3 & 4 │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ job_title + skills_gap + analysis
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  STAGE 3 — HIRO (Interview Coach Agent)                         │
-│  • Opens a stateful interview session (UUID-tracked)            │
-│  • Asks 8 tailored questions based on job title + resume        │
-│  • Scores each answer 1-10, provides real-time feedback         │
-│  • Supports voice input via Groq Whisper (speech-to-text)       │
-│  • Tracks weak areas → persisted to Mem0                        │
-│  • Output → avg_score + weak_areas handed to Stage 4            │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ skills_gap + interview_weak_areas
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  STAGE 4 — FRED (Job Scout Agent)                               │
-│  • Searches live jobs via Firecrawl (primary)                   │
-│  • Falls back to Serper Google Search API                       │
-│  • Returns 6 formatted job cards with role, company, match %    │
-│  • Persists search context to Mem0                              │
-│  • Output → job market context handed to Stage 5                │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ all prior outputs + job context
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  STAGE 5 — ABIGAIL (Career Roadmap Agent)                       │
-│  • Reads: skills_gap, interview_weak_areas, resume scores       │
-│  • Generates personalized 90-day learning plan with:            │
-│    - Week-by-week milestones                                    │
-│    - Free course recommendations (Coursera, YouTube, etc.)      │
-│    - Certification roadmap                                      │
-│    - Financial aid email templates                              │
-│  • Interactive Q&A chat (Rahul persona)                         │
-└─────────────────────────────────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  MEMORY LAYER — Mem0 (Cross-Agent Shared Context)               │
-│  • All agents read/write to user profile in Mem0                │
-│  • Enables: personalized context, continuity across tabs        │
-│  • Stores: resume analysis, interview scores, job searches      │
-└─────────────────────────────────────────────────────────────────┘
-```
+### 📄 Resume Intelligence
+- ATS-style resume analysis
+- Resume vs job description matching
+- Bullet-point rewriting
+- Section-level enhancement
+- Resume generation assistance
+- Persistent profile saving
 
-### Agent Communication Protocol
+### 🎤 AI Interview Coach
+- Mock interview sessions
+- Voice-to-text transcription
+- Response evaluation and scoring
+- Communication feedback
+- Behavioral and technical interview practice
 
-Agents communicate through two channels:
+### 💼 Live Job Discovery
+- Real-time job search
+- Intelligent filtering
+- Career-aligned recommendations
+- Multi-source job retrieval with fallback systems
 
-1. **Direct State Passing (Real-time):** The React frontend maintains a `useUserSession` hook that carries structured outputs from each stage as React state — passed as props to downstream agent components.
+### 🛣️ Personalized Career Roadmaps
+- 30 / 60 / 90-day growth plans
+- Skill-gap analysis
+- Certification recommendations
+- AI mentor-style career guidance
 
-2. **Persistent Memory (Cross-session):** Mem0 cloud memory stores structured user profiles. Any agent can query prior context using `user_id`.
-
-```
-Agent A → onAnalysisComplete(result) → useUserSession.setSession()
-                                              ↓
-                                    Agent B receives session.analysisResult
-                                    Agent B also queries Mem0(user_id)
-```
+### 🧠 Cross-Agent Memory
+- Persistent user context using Mem0
+- Shared memory between agents
+- Session continuity across workflows
 
 ---
 
-## 🏗️ Architecture Diagram
+# 🏗️ System Architecture
+
+## Multi-Agent Design
+
+Baymax.app uses specialized AI agents instead of a single monolithic model.
+
+| Agent | Responsibility |
+|---|---|
+| **Honey** | Resume analysis and enhancement |
+| **Hiro** | Interview coaching and evaluation |
+| **Fred** | Real-time job search |
+| **Abigail** | Career planning and mentorship |
+| **Mem0 Layer** | Persistent shared memory |
+
+This architecture improves:
+- response quality
+- task specialization
+- scalability
+- maintainability
+- contextual continuity
+
+
+## Architecture Diagram
 
 ```mermaid
 graph TD
@@ -156,6 +117,196 @@ graph TD
     style FC fill:#2ec4b6,color:#fff
     style SE fill:#cbf3f0,color:#000
 ```
+
+---
+
+## ⚙️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **LLM Inference** | Groq LLaMA 3.3-70B |
+| **Speech-to-Text** | Groq Whisper |
+| **Memory** | Mem0 |
+| **Backend** | FastAPI, Python 3.11 |
+| **Frontend** | React 18, TypeScript, Vite |
+| **UI** | shadcn/ui |
+| **PDF Processing** | PyMuPDF |
+| **Job Search** | Firecrawl API, Serper API |
+| **Deployment** | DigitalOcean + Vercel |
+
+---
+
+# 🧩 Classical AI + Modern AI Hybrid Design
+
+Baymax.app intentionally combines symbolic AI techniques with modern generative AI systems.
+
+Instead of relying purely on LLM outputs, the roadmap generation pipeline uses:
+
+- **Constraint Satisfaction Problems (CSPs)**
+- **AC-3 Arc Consistency**
+- **Backtracking Search**
+
+to enforce scheduling realism and dependency constraints.
+
+The LLM layer then converts the validated plan into personalized human-readable guidance.
+
+This hybrid architecture produces outputs that are:
+- more reliable
+- constraint-aware
+- personalized
+- explainable
+
+---
+
+# 🔌 API Endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/health` | Backend + API health |
+| POST | `/extract-resume` | Extract text from PDF |
+| POST | `/resume/analyze` | Resume ATS analysis |
+| POST | `/resume/analyze/upload` | Resume upload analysis |
+| POST | `/resume/improve` | Rewrite bullet points |
+| POST | `/resume/improve-section` | Improve full sections |
+| POST | `/resume/generate-section` | Generate new section |
+| POST | `/resume/save-profile` | Save user profile |
+| GET | `/resume/profile/{user_id}` | Retrieve saved profile |
+| POST | `/interview/start` | Start interview |
+| POST | `/interview/reply` | Evaluate answer |
+| POST | `/interview/transcribe` | Audio transcription |
+| POST | `/interview/save-result` | Save interview metrics |
+| POST | `/jobs` | Search live jobs |
+| POST | `/roadmap` | Generate roadmap |
+| POST | `/roadmap/certifications` | Recommend certifications |
+| POST | `/roadmap/chat` | AI career mentorship |
+
+---
+
+# 📁 Project Structure
+
+```bash
+baymax.app/
+│
+├── backend/
+│   ├── agents/
+│   │   ├── resume_agent.py
+│   │   ├── interview_agent.py
+│   │   ├── job_search_agent.py
+│   │   ├── career_planner_agent.py
+│   │   └── memory_agent.py
+│   │
+│   ├── tools/
+│   │   ├── pdf_tool.py
+│   │   └── search_tool.py
+│   │
+│   ├── api.py
+│   ├── config.py
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── lib/
+│   │   └── pages/
+│
+├── .env.example
+├── render.yaml
+├── start.sh
+└── README.md
+```
+
+---
+
+# 🚀 Quick Start
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/Aiza166/baymax.app.git
+cd baymax.app
+```
+
+---
+
+## 2. Configure Environment Variables
+
+Create a `.env` file:
+
+```env
+GROQ_API_KEY=
+SERPER_API_KEY=
+FIRECRAWL_API_KEY=
+MEM0_API_KEY=
+```
+
+---
+
+# 🖥️ Backend Setup
+
+```bash
+cd backend
+
+pip install -r requirements.txt
+
+uvicorn api:app --reload
+```
+
+Backend runs on:
+
+```bash
+http://localhost:8000
+```
+
+---
+
+# 🌐 Frontend Setup
+
+```bash
+cd frontend
+
+npm install
+
+npm run dev
+```
+
+Frontend runs on:
+
+```bash
+http://localhost:8080
+```
+
+---
+
+# 🎯 Design Philosophy
+
+Baymax.app was built around a simple idea:
+
+> Career guidance should not be limited to students with elite networks, expensive coaching, or privileged access.
+
+The platform is designed to make:
+- mentorship
+- interview preparation
+- resume optimization
+- career planning
+- job discovery
+
+more accessible through intelligent AI systems.
+
+---
+
+# 🔮 Future Improvements
+
+Planned roadmap features include:
+
+- LinkedIn profile analysis
+- Recruiter dashboards
+- Resume version tracking
+- Interview analytics dashboard
+- AI networking assistant
+- Team collaboration support
+- Fine-tuned domain-specific agents
+- RAG-powered career knowledge base
 
 ---
 
@@ -207,142 +358,32 @@ A successful end-to-end run looks like this:
 
 ---
 
-## 🚀 Quick Start
+---
 
-### Prerequisites
-- Python 3.11+, Node.js 18+
+# 📜 License
 
-### 1. Clone & configure
-
-```bash
-git clone https://github.com/Aiza166/baymax.app.git
-cd baymax.app
-cp .env.example .env
-# Fill in your API keys in .env
-```
-
-| Key | Source |
-|-----|--------|
-| `GROQ_API_KEY` | [console.groq.com](https://console.groq.com) (free) |
-| `SERPER_API_KEY` | [serper.dev](https://serper.dev) (100 free/mo) |
-| `FIRECRAWL_API_KEY` | [firecrawl.dev](https://firecrawl.dev) |
-| `MEM0_API_KEY` | [app.mem0.ai](https://app.mem0.ai) (free tier) |
-
-### 2. Start everything (one command)
-
-```bash
-bash start.sh
-```
-
-- Backend → **http://localhost:8000** (FastAPI + Swagger at `/docs`)
-- Frontend → **http://localhost:8080** (React + Vite)
-
-### 3. Manual start
-
-```bash
-# Backend
-cd backend && python3 -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-uvicorn api:app --host 0.0.0.0 --port 8000 --reload
-
-# Frontend (separate terminal)
-cd frontend && npm install && npm run dev
-```
+MIT License
 
 ---
 
-## 🌐 Production Deployment
+# ❤️ Acknowledgements
 
-| Service | URL |
-|---------|-----|
-| **Frontend (Vercel)** | https://baymax-app-six.vercel.app |
-| **Backend (DigitalOcean)** | https://baymax-app-ozhwo.ondigitalocean.app |
-| **API Health** | https://baymax-app-ozhwo.ondigitalocean.app/health |
-| **API Docs** | https://baymax-app-ozhwo.ondigitalocean.app/docs |
-
----
-
-## 🔌 API Reference
-
-| Method | Endpoint | Agent | Description |
-|--------|----------|-------|-------------|
-| `GET` | `/health` | — | Backend health + API key status |
-| `POST` | `/extract-resume` | Cass | PDF → extracted text |
-| `POST` | `/resume/analyze` | Honey | Analyze resume vs JD (JSON) |
-| `POST` | `/resume/analyze/upload` | Honey | Analyze resume vs JD (PDF upload) |
-| `POST` | `/resume/improve` | Cass | Rewrite a single bullet |
-| `POST` | `/resume/improve-section` | Cass | Improve a full section |
-| `POST` | `/resume/generate-section` | Cass | Generate a section from scratch |
-| `POST` | `/resume/save-profile` | Mem0 | Persist profile to memory |
-| `GET` | `/resume/profile/{user_id}` | Mem0 | Retrieve saved profile |
-| `POST` | `/interview/start` | Hiro | Begin interview session |
-| `POST` | `/interview/reply` | Hiro | Submit answer, get feedback |
-| `POST` | `/interview/transcribe` | Hiro | Voice (audio) → text |
-| `POST` | `/interview/save-result` | Mem0 | Save interview scores |
-| `POST` | `/jobs` | Fred | Search live job listings |
-| `POST` | `/roadmap` | Abigail | Generate 90-day plan |
-| `POST` | `/roadmap/certifications` | Abigail | Recommend certifications |
-| `POST` | `/roadmap/chat` | Abigail | Chat with career mentor |
+Built with care for:
+- Women in AI Accelerator Build Challenge
+- AI Mustaqbil 2.0
+- Students navigating career uncertainty
+- Early professionals seeking accessible guidance
 
 ---
 
-## 🛠️ Tech Stack
+# 👩‍💻 Author
 
-| Layer | Technology |
-|-------|-----------|
-| **LLM** | Groq LLaMA 3.3-70b (inference), Groq Whisper (STT) |
-| **Memory** | Mem0 (cloud, cross-agent persistent memory) |
-| **Job Search** | Firecrawl (primary), Serper API (fallback) |
-| **Backend** | FastAPI, Python 3.11, PyMuPDF, SlowAPI |
-| **Frontend** | React 18, TypeScript, Vite, shadcn/ui |
-| **Deploy** | DigitalOcean App Platform (backend), Vercel (frontend) |
+## Aiza Gazyani
 
----
+Computer Science undergraduate passionate about:
+- AI systems
+- multi-agent architectures
+- human-centered technology
+- accessible career tooling
 
-## 📁 Project Structure
-
-```
-baymax.app/
-├── backend/
-│   ├── api.py                    ← All FastAPI endpoints (rate-limited)
-│   ├── config.py                 ← API key validation
-│   ├── requirements.txt
-│   ├── agents/
-│   │   ├── resume_agent.py       ← Honey (Groq LLaMA 3.3-70b)
-│   │   ├── interview_agent.py    ← Hiro (Groq LLaMA + Whisper)
-│   │   ├── job_search_agent.py   ← Fred (Firecrawl + Serper)
-│   │   ├── career_planner_agent.py ← Abigail (Groq LLaMA 3.3-70b)
-│   │   └── memory_agent.py       ← Mem0 cross-agent memory
-│   └── tools/
-│       ├── pdf_tool.py           ← PDF text extraction (PyMuPDF)
-│       └── search_tool.py        ← Serper fallback search
-│
-├── frontend/
-│   └── src/
-│       ├── components/
-│       │   ├── ResumeBuilder.tsx  ← Cass UI
-│       │   ├── ResumeAnalyzer.tsx ← Honey UI
-│       │   ├── InterviewCoach.tsx ← Hiro UI
-│       │   ├── JobSearch.tsx      ← Fred UI
-│       │   ├── CareerRoadmap.tsx  ← Abigail UI
-│       │   └── Dashboard.tsx      ← Orchestration + progress
-│       ├── hooks/
-│       │   └── use-user-session.ts ← Cross-agent state bridge
-│       └── lib/api.ts             ← Typed API client
-│
-├── start.sh                       ← One-command local start
-├── .env.example                   ← Environment template
-└── README.md
-```
-
----
-
-## 📝 License
-
-MIT — see [LICENSE](LICENSE)
-
----
-
-<div align="center">
-Built for <strong>AI Mustaqbil 2.0</strong> Hackathon · Multi-Agentic Systems Track
-</div>
+GitHub: https://github.com/Aiza166
