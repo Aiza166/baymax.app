@@ -354,7 +354,7 @@ const InterviewCoach = ({ onSwitchTab, jobTitle = "", resumeSummary = "", userId
         else setMode("listening");
       });
     } catch (e) {
-      toast({ title: "Error", description: String(e), variant: "destructive" });
+      toast({ title: "Interview coach is temporarily unavailable", description: "Baymax could not process that answer right now. You can keep your answer and try again.", variant: "destructive" });
       setMode("listening");
     }
   }, [sessionId, questionNum, currentQuestion, speak, startListening, textMode, toast]);
@@ -377,7 +377,7 @@ const InterviewCoach = ({ onSwitchTab, jobTitle = "", resumeSummary = "", userId
         else setMode("listening");
       });
     } catch (e) {
-      toast({ title: "Could not start interview", description: String(e), variant: "destructive" });
+      toast({ title: "Could not start interview", description: "Baymax could not start the interview coach right now. Please try again in a moment.", variant: "destructive" });
       setMode("setup");
     }
   };

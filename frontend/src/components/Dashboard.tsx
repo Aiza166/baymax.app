@@ -38,19 +38,19 @@ const TABS = [
   {
     id: 1,
     icon: ScanText,
-    label: "Resume Analyzer",
-    sublabel: "ATS score & keyword analysis",
+    label: "ATS Analyzer",
+    sublabel: "ATS score & keyword gaps",
     agent: "Honey",
-    agentTitle: "Resume Analyzer & ATS Scorer",
+    agentTitle: "ATS Analyzer & Resume Scorer",
     color: "#e53e3e",
   },
   {
     id: 2,
     icon: Mic2,
-    label: "Mock Interview",
-    sublabel: "Personalized voice interview",
+    label: "Interview Coach",
+    sublabel: "Personalized practice interview",
     agent: "Hiro",
-    agentTitle: "Voice Interview Coach",
+    agentTitle: "Interview Coach",
     color: "#7c3aed",
   },
   {
@@ -65,10 +65,10 @@ const TABS = [
   {
     id: 4,
     icon: Map,
-    label: "Career Roadmap",
-    sublabel: "90-day personalised plan",
+    label: "Roadmap Planner",
+    sublabel: "90-day CSP-powered plan",
     agent: "Abigail",
-    agentTitle: "90-Day Career Roadmap Planner",
+    agentTitle: "90-Day Roadmap Planner",
     color: "#d97706",
   },
 ];
@@ -336,6 +336,32 @@ export default function Dashboard() {
 
             {/* Panel content */}
             <div key={activeTab} className="flex-1 overflow-y-auto p-6 md:p-8" style={{ animation: "staggerFadeIn 0.3s ease-out" }}>
+
+              {activeTab === 0 && (
+                <div className="mb-6 rounded-3xl border border-baymax-red/20 bg-baymax-red/[0.06] p-5 md:p-6">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-baymax-red mb-2">Sample Outcome</p>
+                      <h3 className="font-syne font-extrabold text-lg text-white">See what Baymax builds before filling the form</h3>
+                      <p className="text-sm text-white/55 mt-2 max-w-2xl">A student targeting frontend roles can move from a rough resume to an ATS score, interview practice, job matches, and a CSP-inspired 90-day roadmap.</p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-center min-w-[240px]">
+                      <div className="rounded-2xl bg-black/25 border border-white/10 p-3">
+                        <p className="font-syne font-extrabold text-xl text-white">82</p>
+                        <p className="text-[10px] text-white/40 uppercase tracking-wider">ATS Score</p>
+                      </div>
+                      <div className="rounded-2xl bg-black/25 border border-white/10 p-3">
+                        <p className="font-syne font-extrabold text-xl text-white">7</p>
+                        <p className="text-[10px] text-white/40 uppercase tracking-wider">Job Fits</p>
+                      </div>
+                      <div className="rounded-2xl bg-black/25 border border-white/10 p-3">
+                        <p className="font-syne font-extrabold text-xl text-white">90</p>
+                        <p className="text-[10px] text-white/40 uppercase tracking-wider">Day Plan</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               {activeTab === 0 && (
                 <ResumeBuilder
                   jobTitle={session.targetJobTitle}

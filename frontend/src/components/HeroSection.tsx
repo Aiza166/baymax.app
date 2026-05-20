@@ -23,21 +23,21 @@ const HeroSection = () => {
             className="inline-block bg-baymax-red/20 text-baymax-red text-xs font-mono-label px-3 py-1.5 rounded-full border border-baymax-red/30"
             style={{ animation: "staggerFadeIn 0.5s ease-out 0.1s both" }}
           >
-            🤖 Powered by Groq + CrewAI
+            Multi-agent AI career coach for Pakistan
           </span>
 
           <h1
             className="font-syne font-extrabold text-4xl md:text-[68px] md:leading-[1.05] text-foreground"
             style={{ animation: "staggerFadeIn 0.5s ease-out 0.2s both" }}
           >
-            Your AI Career Team, On Demand.
+            Pakistan's AI Career Coach for Early Tech Talent.
           </h1>
 
           <p
             className="text-muted-foreground text-lg max-w-[480px]"
             style={{ animation: "staggerFadeIn 0.5s ease-out 0.35s both" }}
           >
-            Upload your resume. Ace your interviews. Find real jobs. Get a 90-day roadmap. All in one place — built for Pakistan's next generation of tech talent.
+            Baymax.app is a multi-agent AI career coach for Pakistan's early tech talent, helping students and fresh graduates build resumes, pass ATS checks, practise interviews, find jobs, and plan a 90-day roadmap.
           </p>
 
           <div
@@ -48,7 +48,7 @@ const HeroSection = () => {
               onClick={() => document.getElementById("dashboard")?.scrollIntoView({ behavior: "smooth" })}
               className="bg-baymax-red text-foreground font-syne font-bold px-7 py-3 rounded-lg btn-red-glow transition-all text-base"
             >
-              Start for Free →
+              Open Career Dashboard →
             </button>
             <button
               onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
@@ -65,7 +65,7 @@ const HeroSection = () => {
                 <div key={i} className="w-8 h-8 rounded-full border-2 border-background" style={{ background: c }} />
               ))}
             </div>
-            <span className="text-sm text-muted-foreground">500+ students coached</span>
+            <span className="text-sm text-muted-foreground">Challenge demo for students and early tech talent</span>
           </div>
         </div>
 

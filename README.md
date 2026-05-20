@@ -35,7 +35,7 @@ A single LLM cannot reliably solve this problem. Here's why:
 | Can't specialize deeply across domains | Each agent is purpose-built with its own system prompt, tools, and memory context |
 | Can't use external APIs mid-generation | Agents call Firecrawl, Serper, Groq Whisper as specialized tools |
 | No persistent memory across sessions | Memory Agent (Mem0) stores user context across all pipeline stages |
-| Analysis + Generation = conflicting objectives | Resume Analyzer and Roadmap Planner have separate objectives and prompts |
+| Analysis + Generation = conflicting objectives | ATS Analyzer and Roadmap Planner have separate objectives and prompts |
 | Voice transcription requires a separate model | Interview Agent invokes Whisper (a separate model) for STT |
 
 **The pipeline is sequential and stateful** — each agent's output enriches the context of the next. The Career Roadmap agent, for example, consumes outputs from all three upstream agents (resume analysis scores, interview weak areas, job search results) to generate a truly personalized 90-day plan.
@@ -58,7 +58,7 @@ USER
                            │ resume_text
                            ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  STAGE 2 — HONEY (Resume Analyzer Agent)                        │
+│  STAGE 2 — HONEY (ATS Analyzer Agent)                        │
 │  • Extracts text from PDF using PyMuPDF                         │
 │  • Calls Groq LLaMA 3.3-70b to score: ATS, Match, Overall      │
 │  • Returns: strengths, weaknesses, missing keywords,            │
@@ -131,7 +131,7 @@ Agent A → onAnalysisComplete(result) → useUserSession.setSession()
 ```mermaid
 graph TD
     U([👤 User]) --> RB[Cass\nResume Builder]
-    RB -->|resume_text| RA[Honey\nResume Analyzer]
+    RB -->|resume_text| RA[Honey\nATS Analyzer]
     RA -->|analysis + skills_gap| IC[Hiro\nInterview Coach]
     RA -->|analysis + skills_gap| JS[Fred\nJob Scout]
     IC -->|weak_areas + scores| CP[Abigail\nCareer Roadmap]
@@ -165,7 +165,7 @@ A successful end-to-end run looks like this:
 
 1. **Resume Builder tab** — User uploads their existing PDF resume. Baymax parses it into structured fields (name, experience, education, skills). User clicks ✨ AI Improve on their work experience bullets → Groq rewrites them with stronger action verbs and metrics.
 
-2. **Resume Analyzer tab** — User pastes a job description (e.g., "Software Engineer at Arbisoft"). Baymax returns: **Overall: 78/100, ATS: 85, Match: 71**, highlights missing keywords like "Django, REST APIs, CI/CD", and provides 5 rewritten bullet points.
+2. **ATS Analyzer tab** — User pastes a job description (e.g., "Software Engineer at Arbisoft"). Baymax returns: **Overall: 78/100, ATS: 85, Match: 71**, highlights missing keywords like "Django, REST APIs, CI/CD", and provides 5 rewritten bullet points.
 
 3. **Interview Coach tab** — Baymax opens a voice-enabled 8-question mock interview tailored to "Software Engineer at a Pakistani startup." User speaks their answer → Whisper transcribes it → LLaMA evaluates it with a score and improvement feedback in real-time.
 
@@ -215,7 +215,7 @@ A successful end-to-end run looks like this:
 ### 1. Clone & configure
 
 ```bash
-git clone https://github.com/taha-zaidii/baymax.app.git
+git clone https://github.com/Aiza166/baymax.app.git
 cd baymax.app
 cp .env.example .env
 # Fill in your API keys in .env

@@ -33,7 +33,7 @@ export interface HealthResponse {
  */
 export async function checkHealth(): Promise<HealthResponse> {
   const response = await fetch(`${API_BASE_URL}/health`);
-  if (!response.ok) throw new Error("Health check failed");
+  if (!response.ok) throw new Error("Baymax is starting up. Please try again in a moment.");
   return response.json();
 }
 
@@ -50,8 +50,8 @@ export async function extractResume(file: File): Promise<ExtractResponse> {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to extract resume");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not read this PDF in demo mode. Try another PDF or paste your resume text.");
   }
 
   return response.json();
@@ -78,8 +78,8 @@ export async function runPipeline(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Pipeline analysis failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not complete the full demo pipeline right now. You can still explore each stage manually.");
   }
 
   return response.json();
@@ -102,8 +102,8 @@ export async function analyzeResume(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Resume analysis failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not analyze the resume right now. Please try again or continue with the sample flow.");
   }
 
   return response.json();
@@ -126,8 +126,8 @@ export async function generateInterview(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Interview generation failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not generate interview questions right now. Please try again in a moment.");
   }
 
   return response.json();
@@ -150,8 +150,8 @@ export async function searchJobs(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Job search failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not load job matches right now. Please try again or continue to the roadmap stage.");
   }
 
   return response.json();
@@ -175,8 +175,8 @@ export async function generateRoadmap(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Roadmap generation failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not generate the roadmap right now. Please try again, or use the sample 90-day plan as a guide.");
   }
 
   return response.json();
@@ -211,8 +211,8 @@ export async function startInterview(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to start interview");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not start the interview coach right now. Please try again in a moment.");
   }
 
   return response.json();
@@ -238,8 +238,8 @@ export async function replyInterview(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to submit answer");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not submit that answer right now. Your demo progress is still safe.");
   }
 
   return response.json();
@@ -261,8 +261,8 @@ export async function transcribeAudio(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Transcription failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not transcribe the audio. You can type your answer instead.");
   }
 
   return response.json();
@@ -314,8 +314,8 @@ export async function analyzeResumeStructured(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Structured analysis failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not run the detailed ATS analysis right now. Please try again or use the sample result.");
   }
 
   return response.json();
@@ -341,8 +341,8 @@ export async function improveResumeSection(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Section improvement failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not improve this section right now. Your original text is still safe.");
   }
 
   return response.json();
@@ -368,8 +368,8 @@ export async function generateResumeSection(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Section generation failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not generate this section right now. Try adding a little more context.");
   }
 
   return response.json();
@@ -408,8 +408,8 @@ export async function searchJobsWithSkills(
     body: formData,
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Job search failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not load job matches right now. Please try again or continue to the roadmap stage.");
   }
   return response.json();
 }
@@ -434,8 +434,8 @@ export async function generateRoadmapFull(
     body: formData,
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Roadmap generation failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not generate the roadmap right now. Please try again, or use the sample 90-day plan as a guide.");
   }
   return response.json();
 }
@@ -461,8 +461,8 @@ export async function saveUserProfile(
     }),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to save profile");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not save the profile for this demo session, but you can continue using the dashboard.");
   }
   return response.json();
 }
@@ -498,8 +498,8 @@ export async function getCertifications(
     body: JSON.stringify({ job_title: jobTitle, skills_gap: skillsGap, current_skills: currentSkills }),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Certifications request failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax could not load certifications right now. The roadmap can still be reviewed.");
   }
   return response.json();
 }
@@ -534,8 +534,8 @@ export async function chatWithRahul(
     }),
   });
   if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
-    throw new Error((error as { detail?: string }).detail || "Chat failed");
+    await response.json().catch(() => ({}));
+    throw new Error("Baymax chat is temporarily unavailable. Please continue with the roadmap tasks and try again later.");
   }
   return response.json();
 }

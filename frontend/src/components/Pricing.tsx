@@ -1,105 +1,46 @@
-import { Check, X } from "lucide-react";
-
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "",
-    features: [
-      { text: "Resume scan (1x)", included: true },
-      { text: "3 interview questions", included: true },
-      { text: "5 job matches", included: true },
-      { text: "Basic roadmap", included: true },
-      { text: "PDF report", included: false },
-      { text: "Email delivery", included: false },
-      { text: "Priority AI", included: false },
-    ],
-    popular: false,
-    cta: "Start Free",
-  },
-  {
-    name: "Pro",
-    price: "$9",
-    period: "/mo",
-    features: [
-      { text: "Unlimited resume scans", included: true },
-      { text: "Unlimited interview Qs", included: true },
-      { text: "Unlimited job matches", included: true },
-      { text: "Full career roadmap", included: true },
-      { text: "PDF report", included: true },
-      { text: "Email delivery", included: true },
-      { text: "Priority AI (Groq)", included: true },
-    ],
-    popular: true,
-    cta: "Get Pro",
-  },
-  {
-    name: "Team",
-    price: "$29",
-    period: "/mo",
-    features: [
-      { text: "5 team seats", included: true },
-      { text: "University/bootcamp use", included: true },
-      { text: "Analytics dashboard", included: true },
-      { text: "Full career roadmap", included: true },
-      { text: "PDF report", included: true },
-      { text: "Email delivery", included: true },
-      { text: "Priority AI (Groq)", included: true },
-    ],
-    popular: false,
-    cta: "Contact Us",
-  },
+const demoPoints = [
+  "Free to try during the challenge demo",
+  "Built for students, fresh graduates, and early tech talent in Pakistan",
+  "No paid plans, subscriptions, or enterprise claims in this submission",
+  "Demo-safe fallbacks help voters understand the flow even if an AI API is temporarily unavailable",
 ];
 
 const Pricing = () => {
   return (
     <section id="pricing" className="py-24">
-      <div className="red-divider mb-24" />
       <div className="max-w-5xl mx-auto px-6 text-center">
-        <h2 className="font-syne font-extrabold text-3xl md:text-5xl text-foreground mb-3">Simple, Transparent Pricing</h2>
-        <p className="text-muted-foreground text-lg mb-16">Start free. Upgrade when you're ready.</p>
-        <div className="grid md:grid-cols-3 gap-6">
-          {plans.map((plan, i) => (
-            <div
-              key={i}
-              className={`glass-card rounded-xl p-6 text-left relative ${plan.popular ? "ring-1 ring-baymax-red shadow-[0_0_20px_rgba(232,39,43,0.2)]" : ""}`}
-              style={{ transform: "none" }}
-            >
-              {plan.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-baymax-red text-foreground text-xs font-bold px-3 py-1 rounded-full">
-                  Most Popular
-                </span>
-              )}
-              <h3 className="font-syne font-bold text-lg text-foreground">{plan.name}</h3>
-              <div className="mt-4 mb-6">
-                <span className="font-syne font-extrabold text-4xl text-foreground">{plan.price}</span>
-                <span className="text-muted-foreground text-sm">{plan.period}</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((f, j) => (
-                  <li key={j} className="flex items-center gap-2 text-sm">
-                    {f.included ? (
-                      <Check size={14} className="text-green-400 shrink-0" />
-                    ) : (
-                      <X size={14} className="text-muted-foreground shrink-0" />
-                    )}
-                    <span className={f.included ? "text-foreground" : "text-muted-foreground"}>{f.text}</span>
-                  </li>
-                ))}
-              </ul>
-              <button
-                className={`w-full font-syne font-bold py-3 rounded-lg transition-all text-sm ${
-                  plan.popular ? "bg-baymax-red text-foreground btn-red-glow" : "border border-border text-foreground hover:border-baymax-red"
-                }`}
-              >
-                {plan.cta}
-              </button>
+        <span className="text-baymax-red font-mono-label text-xs uppercase tracking-widest">Challenge Demo</span>
+        <h2 className="font-syne font-extrabold text-3xl md:text-5xl text-foreground mt-3 mb-4">Built for Students, Free to Try</h2>
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
+          Baymax.app is presented as a Women in AI Accelerator Build Challenge demo: a focused, accessible career coach for Pakistan's early tech talent.
+        </p>
+        <div className="glass-card rounded-3xl p-8 md:p-10 text-left max-w-3xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+            <div>
+              <p className="text-sm font-mono uppercase tracking-widest text-baymax-red mb-2">Student Access</p>
+              <h3 className="font-syne font-extrabold text-2xl text-foreground">Challenge demo version</h3>
             </div>
-          ))}
+            <div className="text-left md:text-right">
+              <p className="font-syne font-extrabold text-4xl text-foreground">Free</p>
+              <p className="text-sm text-muted-foreground">for evaluation and testing</p>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {demoPoints.map((point) => (
+              <div key={point} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-muted-foreground">
+                <span className="text-baymax-red font-bold mr-2">✓</span>{point}
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={() => document.getElementById("dashboard")?.scrollIntoView({ behavior: "smooth" })}
+            className="mt-8 w-full md:w-auto bg-baymax-red text-foreground font-syne font-bold px-7 py-3 rounded-lg btn-red-glow transition-all"
+          >
+            Open Career Dashboard
+          </button>
         </div>
       </div>
     </section>
   );
 };
-
 export default Pricing;

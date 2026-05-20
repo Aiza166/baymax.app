@@ -77,7 +77,7 @@ async function improveSection(text: string, context = ""): Promise<string> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text, context }),
   });
-  if (!res.ok) throw new Error("Improve failed");
+  if (!res.ok) throw new Error("Baymax could not improve this section right now. Your text is still safe.");
   const data = await res.json();
   return data.improved || text;
 }
@@ -88,7 +88,7 @@ async function generateSection(sectionName: string, context: string, jobTitle: s
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ section_name: sectionName, context, job_title: jobTitle }),
   });
-  if (!res.ok) throw new Error("Generate failed");
+  if (!res.ok) throw new Error("Baymax could not generate this section right now. Try adding a little more context.");
   const data = await res.json();
   return data.generated_content || "";
 }
@@ -407,7 +407,7 @@ function textToResumeState(text: string): { state: ResumeState; isRaw: boolean }
   const skillRaw = [...(sections["skills"] ?? []), ...(sections["technical"] ?? []), ...(sections["certifications"] ?? [])].filter(Boolean);
   if (skillRaw.length) {
     const combined = skillRaw.join(" | ");
-    const items = combined.split(/[,|•·\n\/]/)
+    const items = combined.split(/[,|•·\n/]/)
       .map((s) => s.replace(/^[\s\-*•:]+/, "").replace(/[\s:]+$/, "").trim())
       .filter((s) => s.length > 1 && s.length < 80 && !/^(languages?|frameworks?|tools?|databases?|skills?):?$/i.test(s));
     state.skills.descriptions = [...new Set(items)].slice(0, 14);
@@ -694,7 +694,7 @@ const ResumeBuilder = ({ jobTitle = "", onResumeTextChange, onProceedToAnalysis 
       }
       setMode("build");
     } catch (e) {
-      toast({ title: "Upload failed", description: String(e), variant: "destructive" });
+      toast({ title: "Resume upload needs attention", description: "Baymax could not read this file in demo mode. Try another PDF or paste your resume details below.", variant: "destructive" });
     } finally {
       setUploadLoading(false);
     }
@@ -709,7 +709,7 @@ const ResumeBuilder = ({ jobTitle = "", onResumeTextChange, onProceedToAnalysis 
       const improved = await improveSection(text, ctx);
       onResult(improved);
       toast({ title: "✨ Enhanced!" });
-    } catch { toast({ title: "Enhance failed", variant: "destructive" }); }
+    } catch { toast({ title: "Enhance unavailable", description: "Baymax could not improve this section right now. Your original text is still safe.", variant: "destructive" }); }
     finally { setLoading(k, false); }
   };
 
@@ -719,7 +719,7 @@ const ResumeBuilder = ({ jobTitle = "", onResumeTextChange, onProceedToAnalysis 
       const generated = await generateSection(section, ctx, jobTitle || "Software Engineer");
       onResult(generated);
       toast({ title: "🤖 Generated!" });
-    } catch { toast({ title: "Generation failed", variant: "destructive" }); }
+    } catch { toast({ title: "Generation unavailable", description: "Baymax could not generate this section right now. Try adding a little more context.", variant: "destructive" }); }
     finally { setLoading(k, false); }
   };
 

@@ -57,7 +57,7 @@ const JobScout = ({
       setJobsContent(result.jobs);
       onJobSearched?.(title);
     } catch (err) {
-      toast({ title: "Job search failed", description: String(err), variant: "destructive" });
+      toast({ title: "Job search temporarily unavailable", description: "Baymax could not load job matches right now. You can still continue to roadmap planning with your target role.", variant: "destructive" });
     }
   };
 

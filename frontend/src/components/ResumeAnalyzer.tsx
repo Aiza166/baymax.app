@@ -52,8 +52,8 @@ async function analyzeResumeJSON(resumeText: string, jobDescription: string): Pr
     body: JSON.stringify({ resume_text: resumeText, job_description: jobDescription }),
   });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.detail || `HTTP ${res.status}`);
+    await res.json().catch(() => ({}));
+    throw new Error("Baymax could not analyze this resume right now. Please try again, or continue with the sample dashboard flow.");
   }
   return res.json();
 }
@@ -67,8 +67,8 @@ async function analyzeResumePDF(file: File, jobDescription: string): Promise<Ana
     body: form,
   });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.detail || `HTTP ${res.status}`);
+    await res.json().catch(() => ({}));
+    throw new Error("Baymax could not read this PDF in demo mode. Try another PDF or paste your resume through the Builder.");
   }
   return res.json();
 }
@@ -195,7 +195,7 @@ const ResumeAnalyzer = ({ onSwitchTab, onAnalysisComplete, builderResumeText, us
       } else if (pdfFile) {
         data = await analyzeResumePDF(pdfFile, jobDescription);
       } else {
-        throw new Error("No resume source selected");
+        throw new Error("Choose a resume source first: use the Builder text or upload a PDF.");
       }
       const safe = normalizeResult(data);
       setResult(safe);

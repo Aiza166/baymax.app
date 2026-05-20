@@ -40,7 +40,7 @@ export interface UserSession {
   finalResumeText: string;      // plain text of current resume
   resumeSource: "builder" | "upload" | null;
 
-  // ── Stage 2: Resume Analyzer ─────────────────────────────────────────────
+  // ── Stage 2: ATS Analyzer ────────────────────────────────────────────────
   analysisResult: AnalysisResult | null;
   targetJobTitle: string;        // extracted from first line of JD
   jobDescription: string;        // full pasted JD

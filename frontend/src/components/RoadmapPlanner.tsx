@@ -234,8 +234,8 @@ const RoadmapPlanner = ({
       finally { setCertsLoading(false); }
 
     } catch (err) {
-      setRoadmapError((err as Error).message);
-      toast({ title: "Roadmap generation failed", description: (err as Error).message, variant: "destructive" });
+      setRoadmapError("Baymax could not generate the roadmap right now. Please try again, or use the sample roadmap as a guide.");
+      toast({ title: "Roadmap temporarily unavailable", description: "Baymax could not generate the roadmap right now. Please try again, or use the sample roadmap as a guide.", variant: "destructive" });
     } finally {
       setRoadmapLoading(false);
     }
