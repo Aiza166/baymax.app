@@ -956,7 +956,7 @@ const ResumeBuilder = ({ jobTitle = "", onResumeTextChange, onProceedToAnalysis 
                     <span className="text-xs font-bold text-gray-500">Entry {idx + 1}</span>
                     {data.educations.length > 1 && <button onClick={() => removeEdu(edu.id)} className="text-red-500"><Trash2 size={13} /></button>}
                   </div>
-                  <div><Label>Institution</Label><input className={inp} placeholder="FAST-NUCES" value={edu.school} onChange={(e) => setEdu(edu.id, "school", e.target.value)} /></div>
+                  <div><Label>Institution</Label><input className={inp} placeholder="e.g. National University" value={edu.school} onChange={(e) => setEdu(edu.id, "school", e.target.value)} /></div>
                   <div className="grid grid-cols-2 gap-2">
                     <div><Label>Degree</Label><input className={inp} placeholder="BS Computer Science" value={edu.degree} onChange={(e) => setEdu(edu.id, "degree", e.target.value)} /></div>
                     <div><Label>Year</Label><input className={inp} placeholder="2024" value={edu.date} onChange={(e) => setEdu(edu.id, "date", e.target.value)} /></div>

@@ -5,21 +5,21 @@ const testimonials = [
   {
     text: "Baymax helped me land my first internship at Arbisoft. The mock interview coach was insane.",
     name: "Ali Hassan",
-    school: "FAST NUCES Karachi, CS 2025",
+    school: "Software Engineer at Arbisoft",
     initials: "AH",
     color: "#E8272B",
   },
   {
     text: "I went from a 52 resume score to 91 in one session. The skills gap report was eye-opening.",
     name: "Fatima Malik",
-    school: "NUST Islamabad, Software Engineering",
+    school: "Associate Frontend Engineer",
     initials: "FM",
     color: "#FF6B35",
   },
   {
     text: "Found a remote job at a US startup through Job Scout. Never thought it was possible.",
     name: "Usman Tariq",
-    school: "IBA Karachi, Computer Science",
+    school: "Remote Software Developer",
     initials: "UT",
     color: "#4285F4",
   },
@@ -39,7 +39,7 @@ const Testimonials = () => {
     <section className="py-24" ref={ref}>
       <div className="red-divider mb-24" />
       <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="font-syne font-extrabold text-3xl md:text-5xl text-foreground mb-16">What Students Are Saying</h2>
+        <h2 className="font-syne font-extrabold text-3xl md:text-5xl text-foreground mb-16">What Early Talents Say</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <div

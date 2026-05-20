@@ -180,7 +180,7 @@ def _fallback_analysis(job_description: str) -> dict:
             "Git", "Testing", "Cloud", "Problem-solving", "Communication"
         ],
         "section_feedback": {
-            "education": "Education section found. Ensure GPA and relevant coursework are highlighted.",
+            "education": "Education section found. Ensure GPA and key specializations are highlighted.",
             "skills": "Skills present. Add more keywords from the job description to improve ATS match.",
             "projects": "Projects listed. Quantify impact (users, performance gains) for stronger effect.",
             "experience": "Experience found. Rewrite bullets with action verbs and measurable outcomes.",

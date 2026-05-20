@@ -1,6 +1,6 @@
 const demoPoints = [
   "Free to try during the challenge demo",
-  "Built for students, fresh graduates, and early tech talent in Pakistan",
+  "Built for graduates and early tech talent in Pakistan",
   "No paid plans, subscriptions, or enterprise claims in this submission",
   "Demo-safe fallbacks help voters understand the flow even if an AI API is temporarily unavailable",
 ];
@@ -10,14 +10,14 @@ const Pricing = () => {
     <section id="pricing" className="py-24">
       <div className="max-w-5xl mx-auto px-6 text-center">
         <span className="text-baymax-red font-mono-label text-xs uppercase tracking-widest">Challenge Demo</span>
-        <h2 className="font-syne font-extrabold text-3xl md:text-5xl text-foreground mt-3 mb-4">Built for Students, Free to Try</h2>
+        <h2 className="font-syne font-extrabold text-3xl md:text-5xl text-foreground mt-3 mb-4">Built for Early Talent, Free to Try</h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
           Baymax.app is presented as a Women in AI Accelerator Build Challenge demo: a focused, accessible career coach for Pakistan's early tech talent.
         </p>
         <div className="glass-card rounded-3xl p-8 md:p-10 text-left max-w-3xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
             <div>
-              <p className="text-sm font-mono uppercase tracking-widest text-baymax-red mb-2">Student Access</p>
+              <p className="text-sm font-mono uppercase tracking-widest text-baymax-red mb-2">Early Career Access</p>
               <h3 className="font-syne font-extrabold text-2xl text-foreground">Challenge demo version</h3>
             </div>
             <div className="text-left md:text-right">
